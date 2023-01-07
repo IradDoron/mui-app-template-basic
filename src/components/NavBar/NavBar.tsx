@@ -5,7 +5,7 @@ import { useState } from 'react';
 // componnets
 import { IconButton, NavLink } from 'shared/core/inputs';
 import { Box, Container } from 'shared/core/layout';
-import { Menu } from 'shared/core/navigation';
+import { Menu, MenuItem } from 'shared/core/navigation';
 import { AppBar, Toolbar } from 'shared/core/surfaces';
 
 // helpers
@@ -24,7 +24,11 @@ export const NavBar = () => {
 		setAnchorElNav(null);
 	};
 	return (
-		<AppBar>
+		<AppBar
+			sx={{
+				position: 'relative',
+			}}
+		>
 			<Container maxWidth="xl">
 				<Toolbar>
 					<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
@@ -72,13 +76,31 @@ export const NavBar = () => {
 							}}
 						>
 							{VIEWS_TITLES.map((page) => (
-								<NavLink
-									key={page}
-									onClick={handleCloseNavMenu}
-									to={`/${stringHelpers.toKebabCase(page)}`}
+								<MenuItem
+									sx={{
+										padding: 0,
+									}}
 								>
-									{page}
-								</NavLink>
+									<NavLink
+										key={page}
+										onClick={handleCloseNavMenu}
+										to={`/${stringHelpers.toKebabCase(page)}`}
+										sx={{
+											color: 'inherit',
+											textDecoration: 'none',
+											backgroundColor: 'transparent',
+											width: '100%',
+											height: '100%',
+											padding: '10px 20px',
+											'&:hover': {
+												backgroundColor: 'transparent',
+												color: 'inherit',
+											},
+										}}
+									>
+										{page}
+									</NavLink>
+								</MenuItem>
 							))}
 						</Menu>
 					</Box>
