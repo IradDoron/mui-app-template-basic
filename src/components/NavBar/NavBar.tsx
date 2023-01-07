@@ -1,8 +1,13 @@
 // imports from 3rd party libraries
-import { Menu as MenuIcon } from '@mui/icons-material';
+import {
+	Menu as MenuIcon,
+	Settings as SettingsIcon,
+} from '@mui/icons-material';
 import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 
 // componnets
+import { SettingDrawer } from 'components/SettingDrawer/SettingDrawer';
 import { IconButton, NavLink } from 'shared/core/inputs';
 import { Box, Container } from 'shared/core/layout';
 import { Menu, MenuItem } from 'shared/core/navigation';
@@ -11,10 +16,16 @@ import { AppBar, Toolbar } from 'shared/core/surfaces';
 // helpers
 import { stringHelpers } from 'utils/helpers/stringHelpers';
 
+// store
+import { isSettingDrawerOpenState } from 'store';
+
 const VIEWS_TITLES = ['Home', 'About', 'Contact'];
 
 export const NavBar = () => {
 	const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+	const [isSettingDrawerOpen, setIsSettingDrawerOpen] = useRecoilState(
+		isSettingDrawerOpenState
+	);
 
 	const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorElNav(event.currentTarget);
@@ -23,6 +34,11 @@ export const NavBar = () => {
 	const handleCloseNavMenu = () => {
 		setAnchorElNav(null);
 	};
+
+	const handleToggleSettingDrawer = () => {
+		setIsSettingDrawerOpen(!isSettingDrawerOpen);
+	};
+
 	return (
 		<AppBar
 			sx={{
@@ -30,7 +46,12 @@ export const NavBar = () => {
 			}}
 		>
 			<Container maxWidth="xl">
-				<Toolbar>
+				<Toolbar
+					sx={{
+						display: 'flex',
+						justifyContent: 'space-between',
+					}}
+				>
 					<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 						{VIEWS_TITLES.map((page) => (
 							<NavLink
@@ -77,12 +98,12 @@ export const NavBar = () => {
 						>
 							{VIEWS_TITLES.map((page) => (
 								<MenuItem
+									key={page}
 									sx={{
 										padding: 0,
 									}}
 								>
 									<NavLink
-										key={page}
 										onClick={handleCloseNavMenu}
 										to={`/${stringHelpers.toKebabCase(page)}`}
 										sx={{
@@ -104,7 +125,20 @@ export const NavBar = () => {
 							))}
 						</Menu>
 					</Box>
+					<Box>
+						<IconButton
+							size="large"
+							aria-label="account of current user"
+							aria-controls="menu-appbar"
+							aria-haspopup="true"
+							color="inherit"
+							onClick={handleToggleSettingDrawer}
+						>
+							<SettingsIcon />
+						</IconButton>
+					</Box>
 				</Toolbar>
+				<SettingDrawer />
 			</Container>
 		</AppBar>
 	);

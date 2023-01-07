@@ -1,8 +1,13 @@
 import { atom, RecoilState } from 'recoil';
 
-import { CustomPaletteModeState } from 'types';
+import { THEMES_NAMES } from 'utils/constants';
 
 export const themeState = atom({
 	key: 'themeState',
-	default: 'light',
-}) as RecoilState<CustomPaletteModeState>;
+	default: 'dark',
+}) as RecoilState<typeof THEMES_NAMES[number]>;
+
+export const isSettingDrawerOpenState = atom({
+	key: 'isSettingDrawerOpenState',
+	default: false,
+}) as RecoilState<boolean>;

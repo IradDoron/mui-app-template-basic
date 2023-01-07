@@ -9,7 +9,7 @@ import {
 
 export const NavLink = (props: NavLinkProps) => {
 	return (
-		<StyledNavLink {...props}>
+		<StyledNavLink {...props} LinkComponent="button">
 			<StyledRouterNavLink to={props.to}>{props.children}</StyledRouterNavLink>
 		</StyledNavLink>
 	);
