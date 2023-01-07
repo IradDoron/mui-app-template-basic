@@ -1,38 +1,28 @@
+// imports from 3rd party libraries
 import { CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
-import { Button, ButtonGroup } from 'shared/core/inputs';
+// components
+import { NavBar } from 'components/NavBar';
+import { Router } from 'components/Router/';
 
-import { THEMES_NAMES } from 'utils/constants';
+// helpers
 import { getDesignTokens } from 'utils/helpers/themeHelpers';
 
+// store
 import { themeState } from 'store';
-
-import { CustomPaletteModeState } from 'types';
 
 export const App = () => {
 	const theme = useRecoilValue(themeState);
-	const setTheme = useSetRecoilState(themeState);
-
-	const handleChangeThemeClick = (theme: CustomPaletteModeState) => {
-		setTheme(theme);
-	};
 
 	return (
 		<ThemeProvider theme={createTheme(getDesignTokens(theme))}>
 			<CssBaseline />
-			<ButtonGroup>
-				{THEMES_NAMES.map((theme: CustomPaletteModeState) => (
-					<Button
-						key={theme}
-						variant="contained"
-						onClick={() => handleChangeThemeClick(theme)}
-					>
-						{theme}
-					</Button>
-				))}
-			</ButtonGroup>
+			<>
+				<NavBar />
+				<Router />
+			</>
 		</ThemeProvider>
 	);
 };
